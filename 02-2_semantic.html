@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semantic Markup & Layout</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      /* CSS Reset & Variable Definitions */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      :root {
+        --bg-color: #0b0f19;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --card-border: rgba(255, 255, 255, 0.08);
+        --text-primary: #f3f4f6;
+        --text-secondary: #9ca3af;
+        --accent-primary: #6366f1;
+        --accent-secondary: #a855f7;
+        --accent-glow: rgba(99, 102, 241, 0.15);
+        --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        font-family: var(--font-family);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Glow Effects */
+      .glow-bg {
+        position: absolute;
+        top: -10%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.05) 50%, transparent 100%);
+        z-index: -1;
+        pointer-events: none;
+        filter: blur(80px);
+      }
+
+      /* Container layout */
+      .wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ==========================================================================
+         1. HEADER & NAVIGATION
+         ========================================================================== */
+      header {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(12px);
+        background-color: rgba(11, 15, 25, 0.8);
+        border-bottom: 1px solid var(--card-border);
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      header .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 32px;
+      }
+
+      nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.3s ease, transform 0.2s ease;
+        display: inline-block;
+      }
+
+      nav a:hover {
+        color: var(--text-primary);
+        transform: translateY(-1px);
+      }
+
+      nav a.active {
+        color: var(--accent-primary);
+        font-weight: 600;
+      }
+
+      .contact-btn {
+        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px var(--accent-glow);
+      }
+
+      .contact-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+      }
+
+      /* ==========================================================================
+         2. HERO SECTION
+         ========================================================================== */
+      .hero {
+        padding: 100px 0 60px;
+        text-align: center;
+        position: relative;
+      }
+
+      .tagline {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: var(--accent-primary);
+        padding: 6px 16px;
+        border-radius: 9999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 24px;
+        letter-spacing: -1px;
+      }
+
+      .hero h1 span {
+        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero p {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        font-weight: 300;
+      }
+
+      /* ==========================================================================
+         3. MAIN LAYOUT (Grid of Content & Sidebar)
+         ========================================================================== */
+      .main-layout {
+        display: grid;
+        grid-template-columns: 8fr 4fr;
+        gap: 40px;
+        padding: 40px 0 100px;
+      }
+
+      @media (max-width: 968px) {
+        .main-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ==========================================================================
+         4. ARTICLES & SECTIONS
+         ========================================================================== */
+      .content-area {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      section.projects-section {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .section-title::before {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 24px;
+        background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+        border-radius: 2px;
+      }
+
+      article.project-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      article.project-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      article.project-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      article.project-card:hover::after {
+        opacity: 1;
+      }
+
+      .card-meta {
+        font-size: 0.8rem;
+        color: var(--accent-primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .project-card h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .project-card p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .tech-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+
+      .tech-tags span {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      /* ==========================================================================
+         5. ASIDE (SIDEBAR)
+         ========================================================================== */
+      aside {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .widget {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 28px;
+      }
+
+      .profile-widget {
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-img-container {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 16px;
+        padding: 3px;
+        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      }
+
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0b0f19;
+      }
+
+      .profile-widget h4 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .profile-widget .role {
+        font-size: 0.85rem;
+        color: var(--accent-primary);
+        font-weight: 500;
+        margin-bottom: 16px;
+      }
+
+      .profile-widget p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .social-links a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+      }
+
+      .skills-widget h5 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        border-bottom: 1px solid var(--card-border);
+        padding-bottom: 8px;
+      }
+
+      .skill-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .skill-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+      }
+
+      .skill-name {
+        color: var(--text-secondary);
+      }
+
+      .skill-bar-bg {
+        width: 120px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .skill-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        border-radius: 3px;
+      }
+
+      /* ==========================================================================
+         6. FOOTER
+         ========================================================================== */
+      footer {
+        background-color: #070a10;
+        border-top: 1px solid var(--card-border);
+        padding: 48px 0;
+        margin-top: auto;
+      }
+
+      .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        text-align: center;
+      }
+
+      .footer-nav {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+      }
+
+      .footer-nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+      }
+
+      .footer-nav a:hover {
+        color: var(--text-primary);
+      }
+
+      .copyright {
+        color: #4b5563;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow-bg"></div>
+
+    <!-- 1. HEADER ELEMENT: 사이트 로고 및 전역 네비게이션 -->
+    <header>
+      <div class="header-container">
+        <a href="#" class="logo">JIN.DEV</a>
+        
+        <!-- NAV ELEMENT: 네비게이션 메뉴 -->
+        <nav>
+          <ul>
+            <li><a href="#" class="active">홈</a></li>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#projects">프로젝트</a></li>
+            <li><a href="#contact">문의</a></li>
+          </ul>
+        </nav>
+
+        <button class="contact-btn">연락하기</button>
+      </div>
+    </header>
+
+    <!-- MAIN ELEMENT: 웹 페이지의 핵심 콘텐츠 영역 -->
+    <main class="wrapper">
+      
+      <!-- SECTION ELEMENT: 히어로 영역 (주제별 그룹화) -->
+      <section class="hero">
+        <span class="tagline">Welcome to my space</span>
+        <h1>안녕하세요, <span>정의진</span>입니다.</h1>
+        <p>시맨틱 마크업과 웹 표준을 준수하며, 아름답고 직관적인 사용자 경험을 창조하는 프론트엔드 개발자입니다.</p>
+        <button class="contact-btn" style="padding: 14px 32px; font-size: 1rem;">더 알아보기</button>
+      </section>
+
+      <!-- 2열 레이아웃: 메인 컨텐츠 영역과 사이드바 -->
+      <div class="main-layout">
+        
+        <!-- 컨텐츠 영역 -->
+        <div class="content-area">
+          
+          <!-- SECTION ELEMENT: 프로젝트 섹션 -->
+          <section id="projects" class="projects-section">
+            <h2 class="section-title">주요 프로젝트</h2>
+
+            <!-- ARTICLE ELEMENT: 독립적으로 배포/재사용 가능한 개별 컨텐츠 -->
+            <article class="project-card">
+              <span class="card-meta">Web Development</span>
+              <h3>개인 포트폴리오 웹사이트 제작</h3>
+              <p>HTML5 시맨틱 태그를 활용해 검색 엔진 최적화(SEO)와 웹 접근성을 고려하여 제작한 모던 포트폴리오 사이트입니다. 부드러운 글래스모피즘 스타일과 화려한 다크 모드 인터페이스를 적용했습니다.</p>
+              <div class="tech-tags">
+                <span>HTML5</span>
+                <span>CSS3</span>
+                <span>Vanilla JS</span>
+              </div>
+            </article>
+
+            <!-- ARTICLE ELEMENT: 두 번째 프로젝트 -->
+            <article class="project-card">
+              <span class="card-meta">UI/UX Design</span>
+              <h3>박스 모델 & 레이아웃 실습 아카이브</h3>
+              <p>박스 모델(Box-Sizing), 블록 및 인라인의 렌더링 동작, 마진 병합 현상 등 CSS 레이아웃 핵심 원리를 정리하고 직접 실습한 교육용 학습 아카이브 페이지입니다.</p>
+              <div class="tech-tags">
+                <span>CSS Box Model</span>
+                <span>Layout</span>
+                <span>Responsive</span>
+              </div>
+            </article>
+            
+          </section>
+        </div>
+
+        <!-- ASIDE ELEMENT: 본문 흐름과 직접적 연관은 없으나 부가적인 정보 제공 (사이드바) -->
+        <aside>
+          <!-- 프로필 위젯 -->
+          <div class="widget profile-widget">
+            <div class="profile-img-container">
+              <img src="https://picsum.photos/150/150" alt="정의진 프로필 사진" class="profile-img" />
+            </div>
+            <h4>정의진</h4>
+            <p class="role">Frontend Developer</p>
+            <p>배움과 성장을 멈추지 않는 개발자입니다. 직관적이고 완성도 높은 웹 인터페이스를 구현하는 것을 좋아합니다.</p>
+            
+            <div class="social-links">
+              <a href="#" title="GitHub">GH</a>
+              <a href="#" title="LinkedIn">LN</a>
+              <a href="#" title="Email">EM</a>
+            </div>
+          </div>
+
+          <!-- 기술 위젯 -->
+          <div class="widget skills-widget">
+            <h5>보유 스킬</h5>
+            <div class="skill-list">
+              <div class="skill-item">
+                <span class="skill-name">HTML5 / 웹 표준</span>
+                <div class="skill-bar-bg">
+                  <div class="skill-bar" style="width: 90%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">CSS3 / Responsive</span>
+                <div class="skill-bar-bg">
+                  <div class="skill-bar" style="width: 85%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">JavaScript (ES6+)</span>
+                <div class="skill-bar-bg">
+                  <div class="skill-bar" style="width: 80%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- FOOTER ELEMENT: 사이트 하단 저작권 정보 및 푸터 메뉴 -->
+    <footer>
+      <div class="footer-container">
+        <ul class="footer-nav">
+          <li><a href="#">개인정보처리방침</a></li>
+          <li><a href="#">이용약관</a></li>
+          <li><a href="#contact">문의하기</a></li>
+        </ul>
+        <p class="copyright">&copy; 2026 정의진 (JIN.DEV). All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
