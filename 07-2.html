@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind CSS 실습: 컴퓨터가게 레이아웃</title>
+    <!-- Tailwind CSS v4 CDN (브라우저용) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      /* 부드러운 스크롤 (html 태그에 적용) */
+      html { scroll-behavior: smooth; }
+    </style>
+  </head>
+  <!-- 
+    Flexbox를 이용해 화면 전체 높이(min-h-screen)를 잡고, 
+    flex-col을 주어 내부 요소들이 위아래로 쌓이게 함. 
+  -->
+  <body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
+
+    <!-- ==========================================
+         1. Navigation Bar (Position & Flex)
+         ========================================== -->
+    <!-- 
+      sticky top-0: 스크롤 시 상단에 고정
+      z-50: 다른 요소들보다 항상 위에 보이도록 z-index 설정
+      backdrop-blur: 배경 흐림 효과 (글래스모피즘) 
+    -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- flex justify-between: 양 끝단으로 컨텐츠를 밀어냄 -->
+        <div class="flex justify-between items-center h-16">
+          
+          <!-- 로고 -->
+          <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+            <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">J</div>
+            <span class="font-bold text-xl tracking-tight text-slate-900">제이슨의 컴퓨터가게</span>
+          </div>
+          
+          <!-- 데스크탑 메뉴 (반응형) -->
+          <!-- hidden md:flex => 모바일에서는 숨기고, 중간 화면(md) 이상에서만 flex로 노출 -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="#" class="text-slate-600 hover:text-green-600 font-medium transition-colors">PC 견적</a>
+            <a href="#" class="text-slate-600 hover:text-green-600 font-medium transition-colors">부품단품</a>
+            <a href="#" class="text-slate-600 hover:text-green-600 font-medium transition-colors">고객센터</a>
+            <button class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+              로그인
+            </button>
+          </div>
+
+          <!-- 모바일 햄버거 아이콘 -->
+          <div class="md:hidden flex items-center">
+            <button class="text-slate-500 hover:text-slate-900 focus:outline-none">
+              <!-- SVG 아이콘 -->
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ==========================================
+         2. Hero Section (배너 영역)
+         ========================================== -->
+    <!-- 
+      relative: 내부 absolute 요소들의 기준점
+      overflow-hidden: 장식 요소가 영역 밖으로 나가는 것을 방지
+    -->
+    <header class="relative overflow-hidden bg-slate-900 text-white">
+      
+      <!-- 백그라운드 장식용 그래픽 (Position Absolute) -->
+      <!-- absolute -top-24 -right-24: 상/우측 밖으로 살짝 걸쳐서 배치 -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+      <!-- 콘텐츠 래퍼 (flex-col로 수직 정렬, text-center로 텍스트 중앙 정렬) -->
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 flex flex-col items-center text-center z-10">
+        <span class="px-3 py-1 text-sm font-semibold text-green-400 bg-green-400/10 border border-green-400/20 rounded-full mb-6">
+          2026 NEW ARRIVAL
+        </span>
+        
+        <!-- 반응형 폰트 크기: text-4xl -> md:text-5xl -> lg:text-6xl -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
+          최강의 성능, 
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-500">RTX 4070 SUPER</span>
+        </h1>
+        <p class="text-lg md:text-xl text-slate-300 max-w-2xl mb-10">
+          게이머와 크리에이터를 위한 압도적인 퍼포먼스. 지금 제이슨의 컴퓨터가게에서 특가로 만나보세요.
+        </p>
+        
+        <!-- 버튼 그룹 -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow-lg shadow-green-500/30 transition-all transform hover:-translate-y-1">
+            특가 구매하기
+          </button>
+          <button class="px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-lg backdrop-blur-sm transition-all">
+            상세 스펙 보기
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==========================================
+         3. Main Content: Grid & Cards
+         ========================================== -->
+    <!-- 
+      flex-grow: 남은 세로 영역을 모두 차지하게 함 (푸터를 바닥으로 밀어냄) 
+    -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+      
+      <!-- 섹션 제목 -->
+      <div class="flex justify-between items-end mb-8 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-3xl font-bold text-slate-900">추천 조립 PC</h2>
+          <p class="text-slate-500 mt-2">용도에 맞는 최적의 시스템을 선택하세요.</p>
+        </div>
+        <a href="#" class="hidden sm:inline-flex items-center text-green-600 font-medium hover:text-green-700">
+          전체 보기 
+          <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+      <!-- 
+        Grid 시스템 (반응형)
+        모바일: 1열 (grid-cols-1)
+        태블릿: 2열 (md:grid-cols-2)
+        데스크탑: 3열 (lg:grid-cols-3)
+      -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Card 1 -->
+        <!-- relative: 자식의 absolute 뱃지 기준점, flex flex-col: 카드 내부 세로 정렬 -->
+        <article class="relative bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 group flex flex-col">
+          
+          <!-- Badge (Absolute Position: top-4, right-4) -->
+          <div class="absolute top-4 right-4 z-10">
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">HIT</span>
+          </div>
+          
+          <!-- 이미지 -->
+          <div class="relative h-56 bg-slate-100 overflow-hidden">
+            <!-- group-hover:scale-105: 부모(article)에 마우스를 올렸을 때 이미지가 살짝 커지는 효과 -->
+            <img src="https://picsum.photos/seed/pc1/600/400" alt="게이밍 PC" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+          </div>
+          
+          <!-- 카드 텍스트 내용 -->
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="text-sm text-slate-500 mb-1">하이엔드 게이밍</div>
+            <h3 class="text-xl font-bold text-slate-900 mb-4">JASON ゲーミング G-PRO</h3>
+            
+            <ul class="text-sm text-slate-600 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> CPU: AMD Ryzen 7 7800X3D</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> VGA: RTX 4070 SUPER</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> RAM: DDR5 32GB</li>
+            </ul>
+            
+            <!-- mt-auto: 남은 공간을 위로 밀어내어 가격/버튼 박스를 항상 맨 아래에 고정 -->
+            <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+              <span class="text-2xl font-extrabold text-slate-900">2,450,000<span class="text-lg font-medium text-slate-500">원</span></span>
+              <button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-green-500 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="relative bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 group flex flex-col">
+          <div class="absolute top-4 right-4 z-10">
+            <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">사무/가정용</span>
+          </div>
+          
+          <div class="relative h-56 bg-slate-100 overflow-hidden">
+            <img src="https://picsum.photos/seed/pc2/600/400" alt="오피스 PC" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+          </div>
+          
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="text-sm text-slate-500 mb-1">가성비 오피스</div>
+            <h3 class="text-xl font-bold text-slate-900 mb-4">JASON OFFICE LITE</h3>
+            
+            <ul class="text-sm text-slate-600 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> CPU: Intel Core i5-13400</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> VGA: Intel UHD Graphics</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> RAM: DDR4 16GB</li>
+            </ul>
+            
+            <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+              <span class="text-2xl font-extrabold text-slate-900">580,000<span class="text-lg font-medium text-slate-500">원</span></span>
+              <button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-green-500 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="relative bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 group flex flex-col">
+          <div class="relative h-56 bg-slate-100 overflow-hidden">
+            <img src="https://picsum.photos/seed/pc3/600/400" alt="크리에이터 PC" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+          </div>
+          
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="text-sm text-slate-500 mb-1">영상 편집 / 3D</div>
+            <h3 class="text-xl font-bold text-slate-900 mb-4">JASON CREATOR X</h3>
+            
+            <ul class="text-sm text-slate-600 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> CPU: Intel Core i9-14900K</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> VGA: RTX 4090 24GB</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> RAM: DDR5 64GB</li>
+            </ul>
+            
+            <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+              <span class="text-2xl font-extrabold text-slate-900">4,950,000<span class="text-lg font-medium text-slate-500">원</span></span>
+              <button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-green-500 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- ==========================================
+         4. Footer
+         ========================================== -->
+    <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- 반응형 양방향 정렬 -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-slate-800 rounded flex items-center justify-center text-slate-400 font-bold">J</div>
+            <span class="font-bold text-lg text-white">제이슨의 컴퓨터가게</span>
+          </div>
+          
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
+            <a href="#" class="hover:text-white transition-colors">회사소개</a>
+            <a href="#" class="hover:text-white transition-colors">이용약관</a>
+            <a href="#" class="hover:text-white transition-colors">개인정보처리방침</a>
+            <a href="#" class="hover:text-white transition-colors">고객지원</a>
+          </div>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-slate-800 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+          <p>&copy; 2026 JASON's Computer. All rights reserved.</p>
+          <div class="mt-4 md:mt-0 flex gap-4">
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700 transition-colors">
+              <span class="sr-only">Facebook</span>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
