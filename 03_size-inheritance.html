@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상속과 사이즈</title>
+    <style>
+      .div {
+        /* color: 폰트색상 */
+        /* content + padding = 배경색 */
+        background-color: beige;
+      }
+      /* 박스계열 스타일은 상속이 안됨 폰트 계열은 상속이 됨 */
+      .parent {
+        /* 박스계열 */
+        width: 400px;
+        height: 200px;
+        padding: 10px;
+        margin: 10px;
+        border: 2px solid red;
+        background-color: yellow;
+        /* 폰트계열 */
+        color: brown;
+        font-size: 24px;
+        text-align: right;
+      }
+      .child {
+        width: 200px;
+        height: 100px;
+        padding: 10px;
+        margin: 10px;
+        border: 2px solid blue;
+        background-color: beige;
+      }
+      html {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent">
+      부모요소
+      <div class="child">자식요소</div>
+    </div>
+    <hr />
+    <div style="font-size: 16px">
+      <div style="font-size: 50%">
+        <!-- %는 상위요소에서 관련 크기 값을 가져오겠다 -->
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nobis
+        corrupti quibusdam, quia cupiditate dolores! Quam possimus earum
+        reprehenderit cupiditate corporis ut laborum vel animi, dicta ducimus
+        assumenda obcaecati incidunt.
+      </div>
+      <!-- 기본폰트는 일반적으로 16px -->
+      <div style="font-size: 2rem">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut magnam
+        dolores voluptatum adipisci tempora consequuntur fuga saepe ullam
+        voluptatibus quod sit, est nihil delectus dolorem, fugiat nostrum totam
+        modi? Perferendis.
+      </div>
+      <div style="font-size: 1rem">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut magnam
+        dolores voluptatum adipisci tempora consequuntur fuga saepe ullam
+        voluptatibus quod sit, est nihil delectus dolorem, fugiat nostrum totam
+        modi? Perferendis.
+      </div>
+    </div>
+    <!-- 텍스트 크기 ... -> wh 크기-->
+    <div style="width: 100px; height: 100px; background-color: cadetblue">
+      <div style="width: 50%; height: 50%; background-color: tomato"></div>
+      <!-- 요소에 크기에 관련도 em도 폰트사이즈에 영향을 받음 -->
+      <div style="width: 2em; height: 1em; background-color: skyblue"></div>
+      <!-- rem도 유사... -->
+    </div>
+    <!-- vw, vh: 브라우저의 가로/세로 길이 (개발자도구 및 주소창 빼고) -->
+    <div style="background-color: aqua; width: 100vw; height: 100vh"></div>
+    <!-- aspect ratio ... -->
+  </body>
+</html>
